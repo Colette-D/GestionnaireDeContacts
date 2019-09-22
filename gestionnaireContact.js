@@ -73,25 +73,14 @@ function sortContact() {
 Je pensais que ce serait la plus simple à écrire, parce que la fonction sort trie "par défaut" en ordre alphabétique. Mais, je me suis vite apperçue
 qu'il fallait ordonner le tri. Si je m'étais contentée de la fonction sort "brute" elle n'aurait pas su faire la différence entre les noms et les prénoms. 
 j'ai trouvé cette méthode dans la documentation https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/sort ... */
-
-
-addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber())
-addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber())
-addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber())
-addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber())
-addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber())
-addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber())
-addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber())
-// ajout de contacts en appelant les fonctions correspondantes dans la bibliothèque "faker" (cf script dans le head du code html)
+faker.locale = "fr" 
+for (let i = 0; i < 50; i++) {
+    addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber()); 
+}
+// ajout de contacts en appelant les fonctions correspondantes dans la bibliothèque "faker", configurées pour sortir des noms et num Fr (cf script dans le head du code html)
 
 // intégration du code dans la page Html via Vue JS 
 
-
-
-var app = new Vue ({
-  el: '#app',
-  data: {contacts : contactsList }
-}) // permet d'afficher la liste des contacts 
 
 
 var app1 = new Vue({ // permet de lier les caractéristiques de la classe contact aux cases à remplir pour ajouter un contact 
@@ -116,4 +105,47 @@ var app1 = new Vue({ // permet de lier les caractéristiques de la classe contac
   }
 })
 
+var app2 = new Vue({ // affiche les contacts sous forme de liste et permet la recherche de contacts 
+  el: '#staggered-list-demo',
+  data: {
+    query: '',
+    list: contactsList
+  },
+  computed: {
+    computedList: function () {
+      var vm = this
+      return this.list.filter(function (item) {
+        return item.name.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1 || item.surname.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1; 
+      })
+    }
+  },
+  methods: {
+    beforeEnter: function (el) {
+      el.style.opacity = 0
+      el.style.height = 0
+    },
+    enter: function (el, done) {
+      var delay = el.dataset.index * 150
+      setTimeout(function () {
+        Velocity(
+          el,
+          { opacity: 1, height: '1.6em' },
+          { complete: done }
+        )
+      }, delay)
+    },
+    leave: function (el, done) {
+      var delay = el.dataset.index * 150
+      setTimeout(function () {
+        Velocity(
+          el,
+          { opacity: 0, height: 0 },
+          { complete: done }
+        )
+      }, delay)
+    }
+  }
+})
+
+// A améliorer : suppression un peu lente sur liste avec beaucoup de noms et pas de réinitialisation des champs "ajouter contact" après un nouvel ajout 
 

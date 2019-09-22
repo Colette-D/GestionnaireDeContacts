@@ -4,6 +4,7 @@
 		<meta charset = "utf-8" />
 		<script src="faker.js" type = "text/javascript"></script> <!-- librairie qui permet de générer des données "plausibles" par souci d'esthétisme -->
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- script de vue --> 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 		<title>gestionnaire de contacts</title>
 
 	</head>
@@ -13,22 +14,34 @@
 
   <h1> Gestionnaire de contacts </h1>
 
- <div id="app">
-  <ul>
-    <li 
-    v-for = "(contact, index) in contacts" 
-    > {{contact.name}}, {{contact.surname}}, {{contact.mobilePhone}}, {{contact.phoneNumber}} 
-    <button v-on:click="contacts.splice(index,1)">Supprimer</button></li> 
-  </ul> <!-- affichage du tableau des contacts sous forme de liste et ajout d'un bouton qui permet de supprimer le contact a côté de celui-ci -->
-</div>
 
 <div id="app-1">
-	<input v-model="name" placeholder="Nom">
+	<h3>Ajouter un contact</h3><input v-model="name" placeholder="Nom">
 	<input v-model="surname" placeholder="Prénom">
 	<input v-model="mobilePhone" placeholder="Téléphone mobile">
 	<input v-model="phoneNumber" placeholder="Téléphone fixe">
 	<button v-on:click="newContact"> Ajouter un contact</button> <!-- affichage de cases a remplir avec les informations requises et bouton ajouter -->
 </div> 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script> <!-- affiche la liste des contacts et permet la recherche -->
+<div id="staggered-list-demo">
+ <h3>Rechercher un contact</h3><input v-model="query" placeholder="Recherche">
+  <transition-group
+    name="staggered-fade"
+    tag="ul"
+    v-bind:css="false"
+    v-on:before-enter="beforeEnter"
+    v-on:enter="enter"
+    v-on:leave="leave"
+  >
+  	<li
+      v-for="(contact, index) in computedList"
+      v-bind:key="contact.name + contact.surname + contact.phoneNumber + contact.mobilePhone"
+      v-bind:data-index="index"
+    >{{contact.name}}, {{contact.surname}}, {{contact.mobilePhone}}, {{contact.phoneNumber}}<button v-on:click="list.splice(index,1)">Supprimer</button></li>
+  </transition-group>
+</div>
+
 
 
 <script src="gestionnaireContact.js"></script>
