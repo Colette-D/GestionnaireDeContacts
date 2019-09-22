@@ -28,7 +28,9 @@ function addContact(name, surname, mobilePhone, phoneNumber) {
     var newContact = new Contact(name, surname, mobilePhone, phoneNumber);
     contactsList.push(newContact);
     sortContact();
-    } /* fonction qui permet d'ajouter un contact, elle prend pour argument les caractéristiques dont on a besoin pour créer ce contact. 
+    }
+
+     /* fonction qui permet d'ajouter un contact, elle prend pour argument les caractéristiques dont on a besoin pour créer ce contact. 
 Étapes de la fonction :  création d'un nouveau contact, ajout du nouveau contact dans le tableau (carnet de contacts), et nouveau tri du tableau suite à l'ajout 
 du contact pour garder l'ordre alphabétique (fonction sortContat cf ligne 52) */
 
@@ -98,13 +100,16 @@ var app1 = new Vue({
     phoneNumber : "",
 
   },
- /*methods: {
-    addConctact : function addContact(name, surname, mobilePhone, phoneNumber) {
-    var newContact = new Contact(name, surname, mobilePhone, phoneNumber);
-    contactsList.push(newContact);
-    sortContact();
+ methods: {
+    newContact : function() {
+        if ((this.name === "") || (this.surname === "") || (this.mobilePhone === "") || (this.phoneNumber === "")) {
+        alert("Le formulaire n'est pas complété");
+        }
+        else {
+            addContact(this.name, this.surname, this.mobilePhone, this.phoneNumber);
+        }
     }
-  }*/
+  }
 })
 
 
