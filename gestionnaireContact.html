@@ -16,10 +16,10 @@
  <div id="app">
   <ul>
     <li 
-    v-for = "(contact, index) in contacts"
+    v-for = "(contact, index) in contacts" 
     > {{contact.name}}, {{contact.surname}}, {{contact.mobilePhone}}, {{contact.phoneNumber}} 
-    <button v-on:click="contacts.splice(index, 1)">Supprimer</button></li>
-  </ul>
+    <button v-on:click="contacts.splice(index,1)">Supprimer</button></li> 
+  </ul> <!-- affichage du tableau des contacts sous forme de liste et ajout d'un bouton qui permet de supprimer le contact a côté de celui-ci -->
 </div>
 
 <div id="app-1">
@@ -27,7 +27,7 @@
 	<input v-model="surname" placeholder="Prénom">
 	<input v-model="mobilePhone" placeholder="Téléphone mobile">
 	<input v-model="phoneNumber" placeholder="Téléphone fixe">
-	<button v-on:click="newContact"> Ajouter un contact</button>
+	<button v-on:click="newContact"> Ajouter un contact</button> <!-- affichage de cases a remplir avec les informations requises et bouton ajouter -->
 </div> 
 
 
