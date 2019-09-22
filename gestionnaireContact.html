@@ -10,23 +10,25 @@
 
    <body>
 
+
+  <h1> Gestionnaire de contacts </h1>
+
  <div id="app">
   <ul>
-    <li v-for = "contact in contacts"> {{contact.name}}, {{contact.surname}}, {{contact.mobilePhone}}, {{contact.phoneNumber}} </li>
+    <li 
+    v-for = "(contact, index) in contacts"
+    > {{contact.name}}, {{contact.surname}}, {{contact.mobilePhone}}, {{contact.phoneNumber}} 
+    <button v-on:click="contacts.splice(index, 1)">Supprimer</button></li>
   </ul>
 </div>
 
-
 <div id="app-1">
-	<button v-on:click="newContact"> Ajouter un contact</button>
 	<input v-model="name" placeholder="Nom">
 	<input v-model="surname" placeholder="Prénom">
 	<input v-model="mobilePhone" placeholder="Téléphone mobile">
 	<input v-model="phoneNumber" placeholder="Téléphone fixe">
-</div>
-
-
-
+	<button v-on:click="newContact"> Ajouter un contact</button>
+</div> 
 
 
 <script src="gestionnaireContact.js"></script>

@@ -85,6 +85,8 @@ addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumbe
 
 // intégration du code dans la page Html via Vue JS 
 
+
+
 var app = new Vue ({
   el: '#app',
   data: {contacts : contactsList }
