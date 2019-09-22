@@ -49,9 +49,10 @@ function searchContact(searchedString) {
 étapes de la fonction : c'est une boucle qui parcourt le tableau et compare la chaine de caractères entrée pour la recherche aux chaines de caractères stockées
 dans le tableau. Intuitivement, je sens qu'il y a là matière à amélioration du code */
 
-function removeContact(index) {
+/*function removeContact(index) {
     contactsList.splice(index,1);
 } // fonction qui permet de supprimer un contact en le retirant du tableau. Étape de la fonction : on supprime le contact en utilisant son indice dans le tableau
+fonction qui devient obsolète à la V3 de travail car v-on:click="contacts.splice(index,1)" me permet de supprimer les contacts directement*/ 
 
 function sortContact() {
     contactsList.sort(function (contact1, contact2) {
@@ -93,7 +94,7 @@ var app = new Vue ({
 }) // permet d'afficher la liste des contacts 
 
 
-var app1 = new Vue({
+var app1 = new Vue({ // permet de lier les caractéristiques de la classe contact aux cases à remplir pour ajouter un contact 
   el: '#app-1',
    data: {
     name : "",
@@ -105,10 +106,11 @@ var app1 = new Vue({
  methods: {
     newContact : function() {
         if ((this.name === "") || (this.surname === "") || (this.mobilePhone === "") || (this.phoneNumber === "")) {
-        alert("Le formulaire n'est pas complété");
+        alert("Le formulaire n'est pas complété"); /* gestion du cas où le formulaire n'est pas rempli. Avant d'ajouter ce bout de code, on pouvait ajouter 
+        des contacts vides ... */
         }
         else {
-            addContact(this.name, this.surname, this.mobilePhone, this.phoneNumber);
+            addContact(this.name, this.surname, this.mobilePhone, this.phoneNumber); // appel de la fonction add contact qui ajoute donc le contact dans le tableau
         }
     }
   }
