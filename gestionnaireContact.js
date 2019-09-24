@@ -106,7 +106,7 @@ var app1 = new Vue({ // permet de lier les caractéristiques de la classe contac
 })
 
 var app2 = new Vue({ // affiche les contacts sous forme de liste et permet la recherche de contacts 
-  el: '#staggered-list-demo',
+  el: '#app-2',
   data: {
     query: '',
     list: contactsList
@@ -125,7 +125,7 @@ var app2 = new Vue({ // affiche les contacts sous forme de liste et permet la re
       el.style.height = 0
     },
     enter: function (el, done) {
-      var delay = el.dataset.index * 150
+      var delay = el.dataset.index * 1 //debugage temps d'attente trop long 
       setTimeout(function () {
         Velocity(
           el,
@@ -135,7 +135,7 @@ var app2 = new Vue({ // affiche les contacts sous forme de liste et permet la re
       }, delay)
     },
     leave: function (el, done) {
-      var delay = el.dataset.index * 150
+      var delay = el.dataset.index * 1 //debugage temps d'attente trop long 
       setTimeout(function () {
         Velocity(
           el,
@@ -146,6 +146,9 @@ var app2 = new Vue({ // affiche les contacts sous forme de liste et permet la re
     }
   }
 })
+
+
+
 
 // A améliorer : suppression un peu lente sur liste avec beaucoup de noms et pas de réinitialisation des champs "ajouter contact" après un nouvel ajout 
 

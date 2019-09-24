@@ -23,8 +23,8 @@
 	<button v-on:click="newContact"> Ajouter un contact</button> <!-- affichage de cases a remplir avec les informations requises et bouton ajouter -->
 </div> 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script> <!-- affiche la liste des contacts et permet la recherche -->
-<div id="staggered-list-demo">
+<!-- affiche la liste des contacts et permet la recherche -->
+<div id="app-2">
  <h3>Rechercher un contact</h3><input v-model="query" placeholder="Recherche">
   <transition-group
     name="staggered-fade"
@@ -38,6 +38,7 @@
       v-for="(contact, index) in computedList"
       v-bind:key="contact.name + contact.surname + contact.phoneNumber + contact.mobilePhone"
       v-bind:data-index="index"
+     
     >{{contact.name}}, {{contact.surname}}, {{contact.mobilePhone}}, {{contact.phoneNumber}}<button v-on:click="list.splice(index,1)">Supprimer</button></li>
   </transition-group>
 </div>
