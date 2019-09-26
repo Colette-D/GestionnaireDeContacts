@@ -1,68 +1,57 @@
 <html>
-  <head>
 
-    <meta charset = "utf-8" />
-    <script src="faker.js" type = "text/javascript"></script> <!-- librairie qui permet de générer des données "plausibles" par souci d'esthétisme -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- script de vue --> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
-    <title>Gestionnaire de contacts</title>
+<head>
 
-  </head>
+  <meta charset = "utf-8" />
+  <script src="faker.js" type = "text/javascript"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+  <title>Gestionnaire de contacts</title>
 
-   <body>
+</head>
 
+<body>
 
   <h1> Gestionnaire de contacts </h1>
 
-<!-- <div id="app-1">
-  <h3>Ajouter un contact</h3><input v-model="name" placeholder="Nom">
-  <input v-model="surname" placeholder="Prénom">
-  <input v-model="mobilePhone" placeholder="Téléphone mobile">
-  <input v-model="phoneNumber" placeholder="Téléphone fixe">
-  <button v-on:click="newContact"> Ajouter un contact</button> -->
+  <!-- Formulaire d'ajout de contact -->
+  <div id="app-1">
+    <form method="post" action="traitement.php">
+      <fieldset>
+        <legend>Ajouter un contact</legend>
+        <input v-model="name" type="text" name="name" placeholder="Nom"/>
+        <input v-model="surname" type="text" name="surname" placeholder="Prénom"/>
+        <input v-model="mobilePhone" type="text" name="mobilePhone" placeholder="Téléphone mobile"/>
+        <input v-model="phoneNumber" type="text" name="phoneNumber" placeholder="Téléphone fixe"/>
+        <button v-on:click="newContact"> Ajouter un contact</button>
+      </fieldset>
+    </form>
+  </div>
 
-  <!-- affichage de cases a remplir avec les informations requises et bouton ajouter -->
-<!-- </div> -->
+  <!-- Formulaire de modification d'un contact -->
+  <div id="app-2">
+    <form method="post" action="traitement.php">
+      <fieldset>
+        <legend>Modifier un contact</legend>
+        <input v-model="name" type="text" name="name" placeholder="Nom" />
+        <input v-model="surname" type="text" name="surname" placeholder="Prénom"/>
+        <input v-model="mobilePhone" type="text" name="mobilePhone" placeholder="Téléphone mobile"/>
+        <input v-model="phoneNumber" type="text" name="phoneNumber" placeholder="Téléphone fixe"/>
+      </fieldset>
+    </form>
+    <!-- Formulaire de recherche d'un contact -->
+    <h3>Rechercher un contact</h3><p><input v-model="query" placeholder="Recherche"></p>
+    <!-- Affiche la liste des contacts et permet la suppression et la modification des contacts --> 
+    <li 
+    v-for="(contact, index) in computedList"
+    v-bind:key="contact.data.name + contact.data.surname + contact.data.phoneNumber + contact.data.mobilePhone"
+    v-bind:data-index="index">{{contact.data.name}}, {{contact.data.surname}}, {{contact.data.mobilePhone}}, {{contact.data.phoneNumber}}
+    <button v-on:click="list.splice(contact.number,1)">Supprimer</button> <button v-on:click="modifyContact(contact.number)"> Modifier</button>
+    </li>
+  </div>
 
-<div id="app-1">
-<form method="post" action="traitement.php">
-  <fieldset>
-    <legend>Ajouter un contact</legend>
+  <script src="gestionnaireContact.js"></script>
 
-  <input v-model="name" type="text" name="name"placeholder="Nom" required />
-  <input v-model="surname" type="text" name="surname"placeholder="Prénom" required/>
-  <input v-model="mobilePhone" type="text" name="mobilePhone"placeholder="Téléphone mobile" required />
-  <input v-model="phoneNumber" type="text" name="phoneNumber"placeholder="Téléphone fixe" required />
-  <button v-on:click="newContact"> Ajouter un contact</button>
-  </fieldset>
-</form>
-</div>
+</body>
 
-<div id="app-">
-<form method="post" action="traitement.php">
-  <fieldset>
-    <legend>Modifier un contact</legend>
-  <input v-model="name" type="text" name="name"placeholder="Nom" required />
-  <input v-model="surname" type="text" name="surname"placeholder="Prénom" required/>
-  <input v-model="mobilePhone" type="text" name="mobilePhone"placeholder="Téléphone mobile" required />
-  <input v-model="phoneNumber" type="text" name="phoneNumber"placeholder="Téléphone fixe" required />
-  </fieldset>
-</form>
-</div> 
-
-<!-- affiche la liste des contacts et permet la recherche -->
-<div id="app-2">
- <h3>Rechercher un contact</h3><p><input v-model="query" placeholder="Recherche"></p>
- <li
-      v-for="(contact, index) in computedList"
-      v-bind:key="contact.data.name + contact.data.surname + contact.data.phoneNumber + contact.data.mobilePhone"
-      v-bind:data-index="index"
-     
-    >{{contact.data.name}}, {{contact.data.surname}}, {{contact.data.mobilePhone}}, {{contact.data.phoneNumber}}
-    <button v-on:click="list.splice(contact.number,1)">Supprimer</button> <button v-on:click="newContact"> Modifier</button></li>
-</div>
-
-<script src="gestionnaireContact.js"></script>
-
-    </body>
 </html>

@@ -1,6 +1,4 @@
-
-var contactsList = [] // création d'un tableau qui stocke les données pour tout nos contacts 
-
+var contactsList = []; 
 
 class Contact {
   constructor(name, surname, mobilePhone, phoneNumber) {
@@ -8,131 +6,106 @@ class Contact {
     this.surname = surname;
     this.mobilePhone= mobilePhone;
     this.phoneNumber = phoneNumber; 
-  }                                 // création d'une classe qui reprend les caractéristiques attendues pour chaque contact 
-    modifyName (newName) {
-        this.name = newName;
+  }                                 
+  modifyName (newName) {
+    this.name = newName;
+  }
+  modifySurname(newSurname) {
+    this.surname = newSurname;
+  }
+  modifyMobilePhone(newMobilePhone) {
+    this.mobilePhone = newMobilePhone;
+  }
+  modifyPhoneNumber (newPhoneNumber) {
+        this.phoneNumber = newPhoneNumber; 
+      } 
+
     }
-     modifySurname(newSurname) {
-        this.surname = newSurname;
+
+    function addContact(name, surname, mobilePhone, phoneNumber) {
+      var newContact = new Contact(name, surname, mobilePhone, phoneNumber);
+      contactsList.push(newContact);
+      sortContact();
     }
-     modifyMobilePhone(newMobilePhone) {
-        this.mobilePhone = newMobilePhone;
+
+    faker.locale = "fr" ;
+    for (let i = 0; i < 100; i++) {
+      addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber()); 
     }
-     modifyPhoneNumber (newPhoneNumber) {
-        this.phoneNumber = newPhoneNumber; // application à l'intérieur de la classe de méthodes qui permettront de modifier les caractéristiques d'un contact
+
+    function sortContact() {
+      contactsList.sort(function (contact1, contact2) {
+        if (contact1.name < contact2.name) 
+          return -1; 
+        else if (contact1.name > contact2.name)
+          return 1; 
+        else {
+          if (contact1.surname < contact2.surname)
+            return -1; 
+          else if (contact1.surname > contact2.surname)
+            return 1; 
+          else
+            return 0; 
+        }
+      })
     } 
 
-}
-
-function addContact(name, surname, mobilePhone, phoneNumber) {
-    var newContact = new Contact(name, surname, mobilePhone, phoneNumber);
-    contactsList.push(newContact);
-    sortContact();
+var app1 = new Vue({ 
+el: '#app-1',
+data: {
+name : "",
+surname : "",
+mobilePhone : "",
+phoneNumber : "",
+},
+methods: {
+  newContact : function() {
+    if ((this.name === "") || (this.surname === "") || (this.mobilePhone === "") || (this.phoneNumber === "")) {
+      alert("Le formulaire n'est pas complété"); 
     }
-
-     /* fonction qui permet d'ajouter un contact, elle prend pour argument les caractéristiques dont on a besoin pour créer ce contact. 
-Étapes de la fonction :  création d'un nouveau contact, ajout du nouveau contact dans le tableau (carnet de contacts), et nouveau tri du tableau suite à l'ajout 
-du contact pour garder l'ordre alphabétique (fonction sortContat cf ligne 52) */
-
-/*function searchContact(searchedString) {
- 
- for (var i = 0; i < contactsList.length; i++) {
-    var contact = contactsList[i]; 
-        if ((searchedString === name.startsWith(searchedString)) || (searchedString === surname.startswith(searchedString)) 
-         {
-            return contact; 
-        }
-    }  
-
-}*/
-
-
-
-/* fonction qui permet de rechercher un contact à partir de n'importe laquelle de ses caractéristiques (nom, prénom, numéro de mobile ou numéro de fixe)
-étapes de la fonction : c'est une boucle qui parcourt le tableau et compare la chaine de caractères entrée pour la recherche aux chaines de caractères stockées
-dans le tableau. Intuitivement, je sens qu'il y a là matière à amélioration du code */
-
-/*function removeContact(index) {
-    contactsList.splice(index,1);
-} // fonction qui permet de supprimer un contact en le retirant du tableau. Étape de la fonction : on supprime le contact en utilisant son indice dans le tableau
-fonction qui devient obsolète à la V3 de travail car v-on:click="contacts.splice(index,1)" me permet de supprimer les contacts directement*/ 
-
-function sortContact() {
-    contactsList.sort(function (contact1, contact2) {
-        if (contact1.name < contact2.name) 
-            return -1; 
-        else if (contact1.name > contact2.name)
-            return 1; 
-        else {
-            if (contact1.surname < contact2.surname)
-                return -1; 
-            else if (contact1.surname > contact2.surname)
-                return 1; 
-            else
-                return 0 // gestion de l'erreur même si, en pratique, peu de chance que cela se produise 
-            }
-        })
-} /* fonction qui permet de trier les contacts par ordre alphabétique d'abord des noms puis des prénoms en cas de doublon de noms. 
-Je pensais que ce serait la plus simple à écrire, parce que la fonction sort trie "par défaut" en ordre alphabétique. Mais, je me suis vite apperçue
-qu'il fallait ordonner le tri. Si je m'étais contentée de la fonction sort "brute" elle n'aurait pas su faire la différence entre les noms et les prénoms. 
-j'ai trouvé cette méthode dans la documentation https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/sort ... */
-faker.locale = "fr" 
-for (let i = 0; i < 100; i++) {
-    addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber()); 
-}
-// ajout de contacts en appelant les fonctions correspondantes dans la bibliothèque "faker", configurées pour sortir des noms et num Fr (cf script dans le head du code html)
-
-// intégration du code dans la page Html via Vue JS 
-
-
-
-var app1 = new Vue({ // permet de lier les caractéristiques de la classe contact aux cases à remplir pour ajouter un contact 
-  el: '#app-1',
-   data: {
-    name : "",
-    surname : "",
-    mobilePhone : "",
-    phoneNumber : "",
-
-  },
- methods: {
-    newContact : function() {
-        if ((this.name === "") || (this.surname === "") || (this.mobilePhone === "") || (this.phoneNumber === "")) {
-        alert("Le formulaire n'est pas complété"); /* gestion du cas où le formulaire n'est pas rempli. Avant d'ajouter ce bout de code, on pouvait ajouter 
-        des contacts vides ... */
-        }
-        else {
-            addContact(this.name, this.surname, this.mobilePhone, this.phoneNumber); // appel de la fonction add contact qui ajoute donc le contact dans le tableau
-        }
+    else {
+      addContact(this.name, this.surname, this.mobilePhone, this.phoneNumber); 
     }
   }
-})
+}
+});
 
-var app2 = new Vue({ // affiche les contacts sous forme de liste et permet la recherche de contacts 
-  el: '#app-2',
-  data: {
-    query: "",
-    list: contactsList
-  },
-  computed: { computedList : function() {
-  sortedContacts = []
-  for(var indice = 0; indice < this.list.length; indice++) { //fonction rechercher 
+var app2 = new Vue({ 
+el: '#app-2',
+data: {
+query: "",
+list: contactsList,
+name : "",
+surname : "",
+mobilePhone : "",
+phoneNumber : ""
+},
+computed: { computedList : function() {
+    sortedContacts = []
+  for(var indice = 0; indice < this.list.length; indice++) {  
     if (this.query === "") {
       sortedContacts.push({ data : this.list[indice] , number : indice})
     }
-     else if (this.list[indice].name.toLowerCase().startsWith(this.query.toLowerCase()) || (this.list[indice].surname.toLowerCase().startsWith(this.query.toLowerCase())))
-         { 
-           sortedContacts.push({ data : this.list[indice], number : indice})
-         }
-      }
-  return sortedContacts 
+    else if (this.list[indice].name.toLowerCase().startsWith(this.query.toLowerCase()) || (this.list[indice].surname.toLowerCase().startsWith(this.query.toLowerCase())))
+    { 
+     sortedContacts.push({ data : this.list[indice], number : indice})
+   }
+ }
+ return sortedContacts 
 }
-  },
-})
+},
+methods : {
+  modifyContact : function(index) {
+   if (this.name !== "") {this.list[index].modifyName(this.name)}
+    if (this.surname !== "") {this.list[index].modifySurname(this.surname)}
+      if (this.mobilePhone !== "") {this.list[index].modifyMobilePhone(this.mobilePhone)}
+        if (this.phoneNumber !== "") {this.list[index].modifyPhoneNumber(this.phoneNumber)}
+          sortContact()}
+      }
+    })
 
 
 
 
-// A améliorer : suppression un peu lente sur liste avec beaucoup de noms et pas de réinitialisation des champs "ajouter contact" après un nouvel ajout 
 
 
