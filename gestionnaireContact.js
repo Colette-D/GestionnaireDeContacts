@@ -18,37 +18,36 @@ class Contact {
   }
   modifyPhoneNumber (newPhoneNumber) {
         this.phoneNumber = newPhoneNumber; 
-      } 
+  } 
+}
 
+function addContact(name, surname, mobilePhone, phoneNumber) {
+  var newContact = new Contact(name, surname, mobilePhone, phoneNumber);
+  contactsList.push(newContact);
+  sortContact();
+}
+
+faker.locale = "fr" ;
+for (let i = 0; i < 100; i++) {
+  addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber()); 
+}
+
+function sortContact() {
+  contactsList.sort(function (contact1, contact2) {
+    if (contact1.name < contact2.name) 
+      return -1; 
+    else if (contact1.name > contact2.name)
+      return 1; 
+    else {
+      if (contact1.surname < contact2.surname)
+        return -1; 
+      else if (contact1.surname > contact2.surname)
+        return 1; 
+      else
+        return 0; 
     }
-
-    function addContact(name, surname, mobilePhone, phoneNumber) {
-      var newContact = new Contact(name, surname, mobilePhone, phoneNumber);
-      contactsList.push(newContact);
-      sortContact();
-    }
-
-    faker.locale = "fr" ;
-    for (let i = 0; i < 100; i++) {
-      addContact(faker.name.lastName(), faker.name.firstName(), faker.phone.phoneNumber(), faker.phone.phoneNumber()); 
-    }
-
-    function sortContact() {
-      contactsList.sort(function (contact1, contact2) {
-        if (contact1.name < contact2.name) 
-          return -1; 
-        else if (contact1.name > contact2.name)
-          return 1; 
-        else {
-          if (contact1.surname < contact2.surname)
-            return -1; 
-          else if (contact1.surname > contact2.surname)
-            return 1; 
-          else
-            return 0; 
-        }
-      })
-    } 
+  })
+} 
 
 var app1 = new Vue({ 
 el: '#app-1',
@@ -80,32 +79,32 @@ surname : "",
 mobilePhone : "",
 phoneNumber : ""
 },
-computed: { computedList : function() {
-    sortedContacts = []
-  for(var indice = 0; indice < this.list.length; indice++) {  
-    if (this.query === "") {
-      sortedContacts.push({ data : this.list[indice] , number : indice})
-    }
-    else if (this.list[indice].name.toLowerCase().startsWith(this.query.toLowerCase()) || (this.list[indice].surname.toLowerCase().startsWith(this.query.toLowerCase())))
-    { 
-     sortedContacts.push({ data : this.list[indice], number : indice})
-   }
- }
- return sortedContacts 
-}
+computed: { 
+  ComputedList : function () {
+    var debug = this
+    return this.list.filter( function (contact) {
+      if (debug.query === "")
+        return true ; 
+     else if (contact.name.toLowerCase().indexOf(debug.query.toLowerCase()) != -1 || contact.surname.toLowerCase().indexOf(debug.query.toLowerCase()) != -1)
+        return true;
+      else 
+        return false;
+    })
+  }
 },
+
 methods : {
   modifyContact : function(index) {
-   if (this.name !== "") {this.list[index].modifyName(this.name)}
-    if (this.surname !== "") {this.list[index].modifySurname(this.surname)}
-      if (this.mobilePhone !== "") {this.list[index].modifyMobilePhone(this.mobilePhone)}
-        if (this.phoneNumber !== "") {this.list[index].modifyPhoneNumber(this.phoneNumber)}
-          sortContact()}
-      }
-    })
-
-
-
-
-
+   if (this.name !== "") 
+    {this.list[index].modifyName(this.name)}; 
+   if (this.surname !== "") 
+    {this.list[index].modifySurname(this.surname)};
+   if (this.mobilePhone !== "") 
+    {this.list[index].modifyMobilePhone(this.mobilePhone)};
+   if (this.phoneNumber !== "") 
+    {this.list[index].modifyPhoneNumber(this.phoneNumber)};
+   sortContact()
+  }
+}
+})
 

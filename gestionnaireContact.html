@@ -43,10 +43,11 @@
     <h3>Rechercher un contact</h3><p><input v-model="query" placeholder="Recherche"></p>
     <!-- Affiche la liste des contacts et permet la suppression et la modification des contacts --> 
     <li 
-    v-for="(contact, index) in computedList"
-    v-bind:key="contact.data.name + contact.data.surname + contact.data.phoneNumber + contact.data.mobilePhone"
-    v-bind:data-index="index">{{contact.data.name}}, {{contact.data.surname}}, {{contact.data.mobilePhone}}, {{contact.data.phoneNumber}}
-    <button v-on:click="list.splice(contact.number,1)">Supprimer</button> <button v-on:click="modifyContact(contact.number)"> Modifier</button>
+    v-for="(contact, index) in ComputedList"
+    v-bind:key="contact.name + contact.surname + contact.phoneNumber + contact.mobilePhone"
+    v-bind:data-index="index">{{contact.name}}, {{contact.surname}}, {{contact.mobilePhone}}, {{contact.phoneNumber}}
+      <button v-on:click="list.splice(list.indexOf(contact),1)">Supprimer</button>
+      <button v-on:click="modifyContact(list.indexOf(contact))"> Modifier</button> 
     </li>
   </div>
 
